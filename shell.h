@@ -10,5 +10,6 @@
 
 void cmdPrompt(char **argVector, char **envVal);
 
+char **commandHandler(const char *strArg, char delim);
 
 #endif
