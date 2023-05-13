@@ -1,5 +1,4 @@
 #include "shell.h"
-#include <sys/wait.h>
 
 /**
 * cmdPrompt - show the prompt and take and execute commands
@@ -14,13 +13,13 @@ void cmdPrompt(char **argVector, char **envVal)
 	int status;
 	ssize_t numChar;
 	size_t n = 0;
-	char *argVal[] = {NULL, NULL};
+	char **argVal;
 	pid_t childProcessID;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			printf("cisfun$ ");
+			printf("#cisfun$ ");
 
 		numChar = getline(&lineString, &n, stdin);
 		if (numChar == -1)
@@ -31,7 +30,7 @@ void cmdPrompt(char **argVector, char **envVal)
 
 		lineString[strlen(lineString) - 1] = 0;
 
-		argVal[0] = lineString;
+		argVal = commandHandler(lineString, ' ');
 		childProcessID = fork();
 		if (childProcessID == -1)
 		{
