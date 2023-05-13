@@ -1,17 +1,16 @@
 #include "shell.h"
+#include <sys/wait.h>
 
 /**
 * cmdPrompt - show the prompt and take and execute commands
-* @argVector:
-* @envVal:
+* @argVector: array of arguments
+* @envVal: environment variables
 * Return: Nothing
 */
 
 void cmdPrompt(char **argVector, char **envVal)
 {
 	char *lineString = NULL;
-	/* We don't need that var anymore*/
-	/*int lineStringIndex;*/
 	int status;
 	ssize_t numChar;
 	size_t n = 0;
@@ -28,26 +27,18 @@ void cmdPrompt(char **argVector, char **envVal)
 			free(lineString), exit(1);
 
 		lineString[strlen(lineString) - 1] = 0;
-		/* I replace this part of code with only that line*/
-		/*
-		lineStringIndex = 0;
-		while (lineString[lineStringIndex] != 0)
-		{
-			if (lineString[lineStringIndex] == '\n')
-			{
-				lineString[lineStringIndex] = 0;
-			}
-			lineStringIndex++;
-		}
-		*/
 
 		argVal[0] = lineString;
-		if ((childProcessID = fork()) == -1)
+		childProcessID = fork();
+		if (childProcessID == -1)
 			free(lineString), exit(1);
 
-		if (execve(argVal[0], argVal, envVal) - 1)
-			printf("%s: No such file or directory\n", argVector[0]);
-		else
-			wait(&status);
+		if (childProcessID == 0)
+		{
+			if (execve(argVal[0], argVal, envVal) - 1)
+				printf("%s: No such file or directory\n", argVector[0]);
+			else
+				wait(&status);
+		}
 	}
 }
