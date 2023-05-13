@@ -12,4 +12,5 @@ void cmdPrompt(char **argVector, char **envVal);
 
 char **commandHandler(const char *strArg, char delim);
 
+void free2D(char **arr2D);
 #endif

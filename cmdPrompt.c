@@ -35,13 +35,17 @@ void cmdPrompt(char **argVector, char **envVal)
 		if (childProcessID == -1)
 		{
 			free(lineString);
+			free2D(argVal);
 			exit(EXIT_FAILURE);
 		}
 
 		if (childProcessID == 0)
 		{
 			if (execve(argVal[0], argVal, envVal) == - 1)
+			{
 				printf("%s: No such file or directory\n", argVector[0]);
+				free2D(argVal);
+			}
 		}
 		else
 			wait(&status);
