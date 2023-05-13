@@ -7,44 +7,45 @@
 * Return: Nothing
 */
 
-void cmdPrompt(char **argVector, char **envVal)
+void cmdPrompt(char **argVector, char **env)
 {
-	char *lineString = NULL;
+	char *argString = NULL;
 	int status;
-	ssize_t numChar;
+	ssize_t strLen;
 	size_t n = 0;
-	char **argVal;
-	pid_t childProcessID;
+	char **argv;
+	pid_t childPID;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("#cisfun$ ");
 
-		numChar = getline(&lineString, &n, stdin);
-		if (numChar == -1)
+		strLen = getline(&argString, &n, stdin);
+		if (strLen == -1)
 		{
-			free(lineString);
+			free(argString);
 			exit(EXIT_FAILURE);
 		}
 
-		lineString[strlen(lineString) - 1] = 0;
+		argString[strlen(argString) - 1] = 0;
 
-		argVal = commandHandler(lineString, ' ');
-		childProcessID = fork();
-		if (childProcessID == -1)
+		argv = commandHandler(argString, ' ');
+
+		childPID = fork();
+		if (childPID == -1)
 		{
-			free(lineString);
-			free2D(argVal);
+			free(argString);
+			free2D(argv);
 			exit(EXIT_FAILURE);
 		}
 
-		if (childProcessID == 0)
+		if (childPID == 0)
 		{
-			if (execve(argVal[0], argVal, envVal) == - 1)
+			if (execve(argv[0], argv, env) == - 1)
 			{
 				printf("%s: No such file or directory\n", argVector[0]);
-				free2D(argVal);
+				free2D(argv);
 			}
 		}
 		else
