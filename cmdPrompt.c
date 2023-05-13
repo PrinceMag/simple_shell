@@ -19,7 +19,7 @@ void cmdPrompt(char **argVector, char **envVal)
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			printf("cisfun$ ");
+			printf("#cisfun$ ");
 
 		numChar = getline(&lineString, &n, stdin);
 		if (numChar == -1)
