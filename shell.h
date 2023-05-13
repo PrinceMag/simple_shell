@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdbool.h>
+#include <string.h>
 
 void cmdPrompt(char **argVector, char **envVal);
 

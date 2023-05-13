@@ -1,10 +1,10 @@
 #include "shell.h"
 
-int main(int argCount, char **argVector, char **envVal)
+int main(int argc, char **argv, char **envVar)
 {
-    if (argCount == 1)
+    if (argc == 1)
     {
-        cmdPrompt(argVector, envVal);
+        cmdPrompt(argv, envVar);
     }
 
     return 0;
