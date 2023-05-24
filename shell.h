@@ -31,7 +31,7 @@ char *pathHandler(char *);
 
 void executeCommand(char **, char **);
 
-int builtin(char *);
+int builtin(char **);
 
 void free2D(char **);
 

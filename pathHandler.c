@@ -8,8 +8,8 @@
 
 char  *pathHandler(char *arg)
 {
-	char *path, *token, *cmd, *pwd, **dirs = NULL;
-	unsigned int idx, count;
+	char *path, *token, *cmd, *pwd;
+	unsigned int idx;
 	struct stat sb;
 	char buf[BUFF_SIZE];
 
@@ -25,43 +25,19 @@ char  *pathHandler(char *arg)
 		} idx++;
 	}
 	idx = 0, token = strtok(&path[5], ":");
+	pwd = getcwd(buf, BUFF_SIZE), cmd = NULL;
 	while (token)
 	{
-		dirs = realloc(dirs, (idx + 1) * sizeof(char *));
-		dirs[idx] = strdup(token);
-		token = strtok(NULL, ":"), idx++;
-	}
-	count = idx, idx = 0;
-	pwd = getcwd(buf, BUFF_SIZE), cmd = NULL;
-	while (dirs[idx])
-	{
-		chdir(dirs[idx]);
+		chdir(token);
 		if (stat(arg, &sb) == 0)
 		{
-			cmd = strdup(dirs[idx]);
+			cmd = strdup(token);
 			_strcat(cmd, arg);
 			break;
-		} idx++;
+		}
+		token = strtok(NULL, ":");
 	}
 	chdir(pwd);
-	free(path), free2Darr(dirs, count);
+	free(path);
 	return (cmd);
 }
-
-/**
-* free2Darr - free a 2d array
-* @arr: pointer to a 2d array
-* @count: length of the arr
-* Return: nothing.
-*/
-
-void free2Darr(char **arr, unsigned int count)
-{
-	unsigned int i;
-
-	for (i = 0; i < count; i++)
-		free(arr[i]);
-
-	free(arr);
-}
-

@@ -9,7 +9,7 @@
 
 void cmdPrompt(char **argVector, char **env)
 {
-	char *cmd, **argv, *argString = NULL;
+	char *cmd, **argv, *argString = NULL, *tmp;
 	size_t n;
 
 	while (1)
@@ -24,23 +24,24 @@ void cmdPrompt(char **argVector, char **env)
 			free(argString);
 			continue;
 		}
-		argString[strlen(argString) - 1] = 0;
+		argString[_strlen(argString) - 1] = 0;
 		argv = commandHandler(argString, ' ');
 		free(argString);
-		if (builtin(argv[0]) == 1)
-		{
-			free2D(argv);
+		if (builtin(argv) == 1)
 			continue;
-		}
 		cmd = pathHandler(argv[0]);
 		if (!cmd)
 		{
-			_write_err(argVector[0]);
 			free2D(argv);
+			_write_err(argVector[0]);
 			continue;
 		}
 		else
+		{
+			tmp = (char *)argv[0];
 			argv[0] = cmd;
+			free(tmp);
+		}
 		executeCommand(argv, env);
 		free2D(argv);
 	}

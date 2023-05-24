@@ -9,7 +9,7 @@
 * Return: 1 On Success, -1 Othewise
 */
 
-int builtin(char *arg)
+int builtin(char **arg)
 {
 	builin_t bin[] = {
 		{"exit", exiting},
@@ -21,8 +21,9 @@ int builtin(char *arg)
 	x = 0;
 	while (bin[x].name)
 	{
-		if (strcmp(arg, bin[x].name) == 0)
+		if (strcmp(arg[0], bin[x].name) == 0)
 		{
+			free2D(arg);
 			bin[x].func();
 			return (SUCCESS);
 		}
