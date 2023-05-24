@@ -66,13 +66,12 @@ void executeCommand(char **argv, char **env)
 	if (childPID == -1)
 	{
 		free2D(argv);
-		return;
+		exiting();
 	}
 	if (childPID == 0)
 	{
 		execve(argv[0], argv, env);
 		free2D(argv);
-		return;
 	}
 	else
 		wait(&status);

@@ -10,12 +10,8 @@ void free2D(char **arr)
 {
 	int i;
 
-	i = 0;
-	while (arr[i])
-	{
+	for (i = 0; arr[i]; i++)
 		free(arr[i]);
-		i++;
-	}
 	free(arr);
 }
 
