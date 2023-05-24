@@ -6,12 +6,28 @@
 * Return: nothing.
 */
 
-void free2D(char **arr2D)
+void free2D(char **arr)
 {
-	int i;
-	for (i = 0; arr2D[i]; i++)
-		free(arr2D[i]);
+	int i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
 
-	free(arr2D[i]);
-	free(arr2D);
+void exiting()
+{
+	exit(0);
+}
+
+void env()
+{
+	int i = 0;
+	while (__environ[i])
+	{
+		printf("%s\n", __environ[i]);
+		i++;
+	}
 }

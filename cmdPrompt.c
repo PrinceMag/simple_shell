@@ -3,52 +3,68 @@
 /**
 * cmdPrompt - show the prompt and take and execute commands
 * @argVector: array of arguments
-* @envVal: environment variables
+* @env: environment variables
 * Return: Nothing
 */
 
+void executeCommand(char **argv, char **env);
 void cmdPrompt(char **argVector, char **env)
 {
+	char *cmd, **argv;
 	char *argString = NULL;
-	int status;
-	ssize_t strLen;
-	size_t n = 0;
-	char **argv;
-	pid_t childPID;
+	size_t n;
 
 	while (1)
 	{
+		n = 0;
 		if (isatty(STDIN_FILENO))
-			printf("#cisfun$ ");
-
-		strLen = getline(&argString, &n, stdin);
-		if (strLen == -1)
+			write(2, "$ ", 2);
+		if (getline(&argString, &n, stdin) == -1)
+			free(argString);
+		if (argString[0] == '\n')
 		{
 			free(argString);
-			exit(EXIT_FAILURE);
+			continue;
 		}
-
 		argString[strlen(argString) - 1] = 0;
-
 		argv = commandHandler(argString, ' ');
-
-		childPID = fork();
-		if (childPID == -1)
+		free(argString);
+		if (builtin(argv[0]) == 1)
 		{
-			free(argString);
 			free2D(argv);
-			exit(EXIT_FAILURE);
+			continue;
 		}
-
-		if (childPID == 0)
+		cmd = pathHandler(argv[0]);
+		if (!cmd)
 		{
-			if (execve(argv[0], argv, env) == - 1)
-			{
-				printf("%s: No such file or directory\n", argVector[0]);
-				free2D(argv);
-			}
+			printf("%s: command not found: %s\n", argVector[0], argv[0]);
+			free2D(argv);
+			continue;
 		}
 		else
-			wait(&status);
+			argv[0] = cmd;
+		executeCommand(argv, env);
+		free2D(argv);
 	}
 }
+
+void executeCommand(char **argv, char **env)
+{
+	int status;
+	pid_t childPID;
+	childPID = fork();
+	if (childPID == -1)
+	{
+		free2D(argv);
+		return;
+	}
+	if (childPID == 0)
+	{
+		execve(argv[0], argv, env);
+		free2D(argv);
+		return;
+	}
+	else
+		wait(&status);
+}
+

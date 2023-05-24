@@ -1,15 +1,11 @@
-#include "shell.h"
+#include "../shell.h"
+
 int main(void)
 {
-	char **argv;
-	int i = 0;
-	char str[] = "cp ./helloworld ../hello/";
-	argv = commandHandler(str, ' ');
-	for (i = 0; argv[i]; i++)
-	{
-		printf("%s\n", argv[i]);
-	}
-
-
+	char *cmd;
+	char str[] = "clear";
+	cmd = pathHandler(str);
+	printf("cmd: %s\n", cmd);
+	free(cmd);
 	return EXIT_SUCCESS;
 }
