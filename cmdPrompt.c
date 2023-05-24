@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <sys/wait.h>
 
 /**
 * cmdPrompt - show the prompt and take and execute commands
@@ -15,10 +16,14 @@ void cmdPrompt(char **argVector, char **env)
 	while (1)
 	{
 		n = 0;
+		signal(SIGINT, handleSignal);
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "#cisfun$ ", 9);
 		if (getline(&argString, &n, stdin) == -1)
+		{
+			free(argString);
 			exit(EXIT_SUCCESS);
+		}
 		if (argString[0] == '\n')
 		{
 			free(argString);
@@ -74,3 +79,17 @@ void executeCommand(char **argv, char **env)
 		wait(&status);
 }
 
+/**
+* handleSignal - catch Ctrl-c
+* @signal: signal number.
+* Return: nothing
+*/
+
+void handleSignal(int signal)
+{
+	if(signal == SIGINT)
+	{
+		printf("Ctrl-C pressed\n");
+		exit(EXIT_SUCCESS);
+	}
+}

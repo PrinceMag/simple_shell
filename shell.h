@@ -10,6 +10,7 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 #include <string.h>
+#include <signal.h>
 
 /**
 * struct Builtin - struct that handle the builtin functions pointer
@@ -40,6 +41,8 @@ void free2Darr(char **, unsigned int count);
 void exiting(void);
 
 void env(void);
+
+void handleSignal(int signal);
 
 size_t _strlen(char *);
 
