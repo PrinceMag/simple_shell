@@ -19,7 +19,7 @@ char **commandHandler(const char *strArg, char delim)
 	size_t count, idx;
 	char *tmpStr, *token, *delimiter;
 
-	idx = count = 0;
+	count = 0;
 	tmpStr = (char *) strArg;
 	while (*tmpStr != 0)
 	{
@@ -35,10 +35,13 @@ char **commandHandler(const char *strArg, char delim)
 	delimiter = &delim;
 	tmpStr = (char *) strArg;
 	token = strtok(tmpStr, delimiter);
+	idx = 0;
 
 	while (token)
 	{
-		argv[idx++] = strdup(token);
+		argv[idx] = strdup(token);
+		if (argv[idx++])
+			return (NULL);
 		token = strtok(NULL, delimiter);
 	}
 	argv[idx] = NULL;

@@ -21,7 +21,7 @@ void cmdPrompt(char **argVector, char **env)
 		if (getline(&argString, &n, stdin) == -1)
 		{
 			free(argString);
-			return;
+			exit(EXIT_SUCCESS);
 		}
 		if (argString[0] == '\n')
 		{
