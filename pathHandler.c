@@ -58,7 +58,7 @@ char  *pathHandler(char *arg)
 
 void free2Darr(char **arr, unsigned int count)
 {
-	int i;
+	unsigned int i;
 
 	for (i = 0; i < count; i++)
 		free(arr[i]);
