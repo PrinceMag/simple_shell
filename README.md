@@ -1,22 +1,7 @@
 # Simple SHell
 
-## Project 0 - swap
-Program that swaps two integer variables without using a third variable.
-We manage to do that using The bitwise operator XOR
-```
-int x, y;
-x = 1;
-y = 2;
-
-/* Swapping*/
-x ^= y;
-y ^= x;
-x ^= y;
-
-// result
-(x = 2)
-(y = 1)
-```
+## Project 0 - make the code nice for betty
+**DONE**
 ## Project 1 - Simple Shell
 Now we're doing some real stuff, it's the first program of the shell.
 #### Main Tasks
