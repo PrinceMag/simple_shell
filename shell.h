@@ -11,7 +11,14 @@
 #include <stdbool.h>
 #include <string.h>
 
-typedef struct {
+/**
+* struct Builtin - struct that handle the builtin functions pointer
+* and there name.
+* @name: the name
+* @func: function pointer
+*/
+typedef struct Builtin
+{
 	char *name;
 	void (*func)(void);
 } builin_t;
@@ -22,15 +29,15 @@ char **commandHandler(const char *, char);
 
 char *pathHandler(char *);
 
-void executeCommand(char **argv, char **env);
+void executeCommand(char **, char **);
 
 int builtin(char *);
 
 void free2D(char **);
 
-void free2Darr(char **arr, unsigned int count);
+void free2Darr(char **, unsigned int count);
 
-void exiting();
+void exiting(void);
 
-void env();
+void env(void);
 #endif
