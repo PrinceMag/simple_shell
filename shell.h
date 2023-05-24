@@ -1,16 +1,32 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+#define BUFF_SIZE 1024
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <stdbool.h>
 #include <string.h>
 
-void cmdPrompt(char **argVector, char **envVal);
+typedef struct {
+	char *name;
+	void (*func)(void);
+} builin_t;
 
-char **commandHandler(const char *strArg, char delim);
+void cmdPrompt(char **, char **);
 
-void free2D(char **arr2D);
+char **commandHandler(const char *, char);
+
+char *pathHandler(char *);
+
+int builtin(char *);
+
+void free2D(char **);
+
+void exiting();
+
+void env();
 #endif

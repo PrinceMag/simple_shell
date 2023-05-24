@@ -16,17 +16,10 @@
 char **commandHandler(const char *strArg, char delim)
 {
 	char **argv;
-	size_t count;
-	char *tmpStr;
-	size_t idx;
-	char *token;
-	char *delimiter;
+	size_t count, idx;
+	char *tmpStr, *token, *delimiter;
 
-	if (!strArg)
-		return (NULL);
-
-	idx = 0;
-	count = 0;
+	idx = count = 0;
 	tmpStr = (char *) strArg;
 	while (*tmpStr != 0)
 	{
@@ -46,10 +39,8 @@ char **commandHandler(const char *strArg, char delim)
 	while (token)
 	{
 		argv[idx++] = strdup(token);
-		token = strtok(0, delimiter);
+		token = strtok(NULL, delimiter);
 	}
-
-	argv[idx] = 0;
-
+	argv[idx] = NULL;
 	return (argv);
 }
