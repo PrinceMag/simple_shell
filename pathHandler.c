@@ -24,7 +24,7 @@ char  *pathHandler(char *arg)
 			break;
 		} idx++;
 	}
-	idx = 0, token = strtok(&path[5], ":");
+	token = strtok(&path[5], ":");
 	pwd = getcwd(buf, BUFF_SIZE), cmd = NULL;
 	while (token)
 	{

@@ -10,13 +10,12 @@
 
 void cmdPrompt(char **argVector, char **env)
 {
-	char *cmd, **argv, *argString = NULL, *tmp;
+	char *cmd, **argv, *argString = NULL;
 	size_t n;
 
 	while (1)
 	{
 		n = 0;
-		signal(SIGINT, handleSignal);
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "#cisfun$ ", 9);
 		if (getline(&argString, &n, stdin) == -1)
@@ -42,11 +41,7 @@ void cmdPrompt(char **argVector, char **env)
 			continue;
 		}
 		else
-		{
-			tmp = (char *)argv[0];
 			argv[0] = cmd;
-			free(tmp);
-		}
 		executeCommand(argv, env);
 		free2D(argv);
 	}
@@ -77,19 +72,4 @@ void executeCommand(char **argv, char **env)
 	}
 	else
 		wait(&status);
-}
-
-/**
-* handleSignal - catch Ctrl-c
-* @signal: signal number.
-* Return: nothing
-*/
-
-void handleSignal(int signal)
-{
-	if(signal == SIGINT)
-	{
-		printf("Ctrl-C pressed\n");
-		exit(EXIT_SUCCESS);
-	}
 }
