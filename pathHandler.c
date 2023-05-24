@@ -13,6 +13,8 @@ char  *pathHandler(char *arg)
 	struct stat sb;
 	char buf[BUFF_SIZE];
 
+	if (stat(arg, &sb) == 0)
+		return (arg);
 	idx = 0;
 	while (__environ[idx])
 	{
@@ -20,8 +22,7 @@ char  *pathHandler(char *arg)
 		{
 			path = strdup(__environ[idx]);
 			break;
-		}
-		idx++;
+		} idx++;
 	}
 	idx = 0, token = strtok(&path[5], ":");
 	while (token)
@@ -41,8 +42,7 @@ char  *pathHandler(char *arg)
 			strcat(cmd, "/");
 			strcat(cmd, arg);
 			break;
-		}
-		idx++;
+		} idx++;
 	}
 	chdir(pwd);
 	free(path), free2Darr(dirs, count);
