@@ -39,8 +39,7 @@ char  *pathHandler(char *arg)
 		if (stat(arg, &sb) == 0)
 		{
 			cmd = strdup(dirs[idx]);
-			strcat(cmd, "/");
-			strcat(cmd, arg);
+			_strcat(cmd, arg);
 			break;
 		} idx++;
 	}

@@ -40,4 +40,10 @@ void free2Darr(char **, unsigned int count);
 void exiting(void);
 
 void env(void);
+
+size_t _strlen(char *);
+
+char *_strcat(char *, char *);
+
+void _write_err(char *);
 #endif

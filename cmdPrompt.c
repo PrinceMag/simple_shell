@@ -9,20 +9,16 @@
 
 void cmdPrompt(char **argVector, char **env)
 {
-	char *cmd, **argv;
-	char *argString = NULL;
+	char *cmd, **argv, *argString = NULL;
 	size_t n;
 
 	while (1)
 	{
 		n = 0;
 		if (isatty(STDIN_FILENO))
-			write(2, "#cisfun$ ", 9);
+			write(STDOUT_FILENO, "#cisfun$ ", 9);
 		if (getline(&argString, &n, stdin) == -1)
-		{
-			free(argString);
 			exit(EXIT_SUCCESS);
-		}
 		if (argString[0] == '\n')
 		{
 			free(argString);
@@ -39,7 +35,7 @@ void cmdPrompt(char **argVector, char **env)
 		cmd = pathHandler(argv[0]);
 		if (!cmd)
 		{
-			printf("%s: No such file or directory\n", argVector[0]);
+			_write_err(argVector[0]);
 			free2D(argv);
 			continue;
 		}
