@@ -29,7 +29,7 @@ char **commandHandler(const char *, char);
 
 char *pathHandler(char *);
 
-void executeCommand(char **, char **);
+void executeCommand(char **, char **, char **);
 
 int builtin(char **);
 

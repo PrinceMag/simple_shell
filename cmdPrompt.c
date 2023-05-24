@@ -1,5 +1,4 @@
 #include "shell.h"
-#include <sys/wait.h>
 
 /**
 * cmdPrompt - show the prompt and take and execute commands
@@ -10,7 +9,8 @@
 
 void cmdPrompt(char **argVector, char **env)
 {
-	char *cmd, **argv, *argString = NULL;
+	/*char *cmd, **argv, *argString = NULL;*/
+	char *argString, **argv;
 	size_t n;
 
 	while (1)
@@ -29,6 +29,9 @@ void cmdPrompt(char **argVector, char **env)
 			continue;
 		}
 		argString[_strlen(argString) - 1] = 0;
+		argv = (char **)malloc(sizeof(char *) * 3);
+		argv[0] = argString;
+		/*
 		argv = commandHandler(argString, ' ');
 		free(argString);
 		if (builtin(argv) == 1)
@@ -42,7 +45,8 @@ void cmdPrompt(char **argVector, char **env)
 		}
 		else
 			argv[0] = cmd;
-		executeCommand(argv, env);
+		*/
+		executeCommand(argv, env, argVector);
 		free2D(argv);
 	}
 }
@@ -54,7 +58,7 @@ void cmdPrompt(char **argVector, char **env)
 * @env: 2d array containing all the environment vars.
 * Return: Nothing.
 */
-void executeCommand(char **argv, char **env)
+void executeCommand(char **argv, char **env, char **argVector)
 {
 	int status;
 	pid_t childPID;
@@ -68,6 +72,7 @@ void executeCommand(char **argv, char **env)
 	if (childPID == 0)
 	{
 		execve(argv[0], argv, env);
+		_write_err(argVector[0]);
 		free2D(argv);
 	}
 	else
