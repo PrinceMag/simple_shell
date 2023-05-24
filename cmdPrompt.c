@@ -7,7 +7,6 @@
 * Return: Nothing
 */
 
-void executeCommand(char **argv, char **env);
 void cmdPrompt(char **argVector, char **env)
 {
 	char *cmd, **argv;
@@ -48,10 +47,18 @@ void cmdPrompt(char **argVector, char **env)
 	}
 }
 
+
+/**
+* executeCommand - function that execute the commands.
+* @argv: 2d array containing the command and the options
+* @env: 2d array containing all the environment vars.
+* Return: Nothing.
+*/
 void executeCommand(char **argv, char **env)
 {
 	int status;
 	pid_t childPID;
+
 	childPID = fork();
 	if (childPID == -1)
 	{

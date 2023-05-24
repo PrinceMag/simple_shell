@@ -1,10 +1,14 @@
 #include "shell.h"
 
-void free2Darr(char **arr, unsigned int count);
+/**
+ * pathHandler - function that handle the path variable(PATH)
+ * @arg: the command name e.g: ls
+ * Return: a pointer to command path e.g: /bin/ls
+ */
+
 char  *pathHandler(char *arg)
 {
-	char *path, *token, *cmd, *pwd;
-	char **dirs = NULL;
+	char *path, *token, *cmd, *pwd, **dirs = NULL;
 	unsigned int idx, count;
 	struct stat sb;
 	char buf[BUFF_SIZE];
@@ -19,14 +23,12 @@ char  *pathHandler(char *arg)
 		}
 		idx++;
 	}
-	idx = 0;
-	token = strtok(&path[5], ":");
+	idx = 0, token = strtok(&path[5], ":");
 	while (token)
 	{
 		dirs = realloc(dirs, (idx + 1) * sizeof(char *));
 		dirs[idx] = strdup(token);
-		token = strtok(NULL, ":");
-		idx++;
+		token = strtok(NULL, ":"), idx++;
 	}
 	count = idx, idx = 0;
 	pwd = getcwd(buf, BUFF_SIZE), cmd = NULL;
@@ -43,8 +45,7 @@ char  *pathHandler(char *arg)
 		idx++;
 	}
 	chdir(pwd);
-	free(path);
-	free2Darr(dirs, count);
+	free(path), free2Darr(dirs, count);
 	return (cmd);
 }
 
@@ -57,7 +58,8 @@ char  *pathHandler(char *arg)
 
 void free2Darr(char **arr, unsigned int count)
 {
-	int i = 0;
+	int i;
+
 	for (i = 0; i < count; i++)
 		free(arr[i]);
 

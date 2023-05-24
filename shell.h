@@ -22,9 +22,13 @@ char **commandHandler(const char *, char);
 
 char *pathHandler(char *);
 
+void executeCommand(char **argv, char **env);
+
 int builtin(char *);
 
 void free2D(char **);
+
+void free2Darr(char **arr, unsigned int count);
 
 void exiting();
 

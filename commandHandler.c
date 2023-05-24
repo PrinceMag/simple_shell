@@ -2,11 +2,11 @@
 
 /**
 * commandHandler - splits the command that the user provide into
-* multiple token 
-* Description: e.g ("cp test ../folder/" 
-*  OUTPUT: 	cp
-*  			test
-*  			../folder/)
+* multiple token
+* Description: e.g ("cp test ../folder/"
+* OUTPUT: cp
+* test
+* ../folder/)
 * @strArg: the command line provided by the user
 * @delim: the delimiter (in our case it's always space)
 * Return: 2d array contains the tokens
