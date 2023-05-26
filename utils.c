@@ -36,7 +36,6 @@ void env(void)
 
 	while (__environ[i])
 	{
-		printf("%s\n", __environ[i]);
 		i++;
 	}
 }

@@ -17,7 +17,6 @@ int main(int argc, char **argv)
 		if (strncmp(environ[idx], "PATH", 4) == 0)
 		{
 			path = strdup(environ[idx]);
-			printf("%s\n", path);
 			break;
 		}
 		idx++;
@@ -25,12 +24,10 @@ int main(int argc, char **argv)
 	idx = 0;
 
 	token = strtok(&path[5], ":");
-	printf("we pass strtok\n");
 	while (token)
 	{
 		dirs = realloc(dirs, (idx + 1) * sizeof(char *));
 		dirs[idx] = strdup(token);
-		printf("duplicate dirs successfully!\n");
 		token = strtok(NULL, ":");
 		idx++;
 	}
@@ -43,8 +40,6 @@ int main(int argc, char **argv)
 		if (stat(argv[0], &sb) == 0)
 		{
 			argv[0] = strcat(dirs[idx], argv[0]);
-			printf("cmd is : ls\n");
-			printf("new cmd is : %s\n", argv[0]);
 			break;
 		}
 		idx++;
