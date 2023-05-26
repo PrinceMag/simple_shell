@@ -30,6 +30,5 @@ int builtin(char *arg)
 int main(void)
 {
 	builtin("env");
-	printf("hello world\n");
 	return EXIT_SUCCESS;
 }

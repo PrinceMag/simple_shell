@@ -6,9 +6,8 @@ int main(void)
 	struct stat sb;
 	if (stat(cmd, &sb) == 0)
 	{
-		printf("cmd found : %s\n", cmd);
 		return 0;
 	}
-	printf("cmd not found\n");
+	perror("cmd not found");
 	return EXIT_SUCCESS;
 }
