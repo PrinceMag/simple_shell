@@ -13,12 +13,20 @@ void cmdPrompt(char **argVector, char **env)
 	char *cmd, **argv;
 	char *argString = NULL;
 	size_t n;
+	bool fromPipe = false;
 
-	while (1)
+	while (1 & !fromPipe)
 	{
 		n = 0;
-		if (isatty(STDIN_FILENO))
-			write(2, "$ ", 2);
+		/*check if user input is piped into the program or enetered from terminal*/
+		if (isatty(STDIN_FILENO) == 0)
+		{
+			fromPipe = true;
+		}
+		
+		/*print the $ on the terminal*/
+		write(2, "$ ", 2);
+
 		if (getline(&argString, &n, stdin) == -1)
 			free(argString);
 		if (argString[0] == '\n')
@@ -37,7 +45,7 @@ void cmdPrompt(char **argVector, char **env)
 		cmd = pathHandler(argv[0]);
 		if (!cmd)
 		{
-			printf("%s: command not found: %s\n", argVector[0], argv[0]);
+			perror(argVector[0]);
 			free2D(argv);
 			continue;
 		}

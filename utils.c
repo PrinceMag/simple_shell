@@ -27,7 +27,6 @@ void env()
 	int i = 0;
 	while (__environ[i])
 	{
-		printf("%s\n", __environ[i]);
 		i++;
 	}
 }
